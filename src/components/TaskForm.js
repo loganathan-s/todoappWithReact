@@ -5,13 +5,14 @@ class TaskForm extends React.Component{
 	createTask(event){
 		event.preventDefault();
 		const task = {task: this.task.value}
-		console.log(task.task)
+		this.props.addTask(task);
+		this.taskForm.reset();
 	}
 
 
 	render(){
 		return(
-			 <form className="taskForm"  onSubmit={this.createTask.bind(this)}>
+			 <form ref={(input) => this.taskForm = input} className="taskForm"  onSubmit={this.createTask.bind(this)}>
 			  <input ref={(input) => this.task = input } type="text" placeholder="Task"/>
 			  <button type="submit">+ Add Task</button> 
 			 </form>
