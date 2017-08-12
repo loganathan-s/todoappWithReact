@@ -4,7 +4,7 @@ class TaskForm extends React.Component{
 	
 	createTask(event){
 		event.preventDefault();
-		const task = {task: this.task.value}
+		const task = {task: this.task.value, status: "New"}
 		this.props.addTask(task);
 		this.taskForm.reset();
 	}

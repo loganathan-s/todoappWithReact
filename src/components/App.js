@@ -13,20 +13,31 @@ class App extends Component {
     super();
     this.loadSamples = this.loadSamples.bind(this); 
     this.addTask = this.addTask.bind(this); 
+    this.removeTask = this.removeTask.bind(this); 
+    this.markComplete = this.markComplete.bind(this); 
     this.state = {
       tasks: {}
     };
   }
 
     addTask(task){
-      console.log(this.state)
-     //always take the copy of state and then do update 
       const tasks = {...this.state.tasks};
-      const timestamp = Date.now();
-      tasks[`task-${timestamp}`] = task;
+      const taskKey = Object.keys(tasks).length + 1;
+      tasks[`task${taskKey}`] = task;
       this.setState({ tasks })
     }
 
+   removeTask(key){
+     const tasks = {...this.state.tasks};
+     delete tasks[key];
+    this.setState({ tasks }) 
+  }
+
+  markComplete(key){
+     const tasks = {...this.state.tasks};
+     tasks[key].status = "Done"
+     this.setState({ tasks }) 
+  }
   loadSamples(){
       this.setState({
         tasks: Tasks
@@ -48,7 +59,7 @@ class App extends Component {
             <ul className="allTasks">
               { Object.
                 keys(this.state.tasks).map(
-                  key => <Task key={key}  task={this.state.tasks[key]} />)
+                  key => <Task key={key} index={key} task={this.state.tasks[key]} removefromTask={this.removeTask} markasDone={this.markComplete}  />)
             }
             </ul>
           </div>
