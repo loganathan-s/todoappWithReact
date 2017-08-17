@@ -14,30 +14,54 @@ class App extends Component {
     this.loadSamples = this.loadSamples.bind(this); 
     this.addTask = this.addTask.bind(this); 
     this.removeTask = this.removeTask.bind(this); 
+    this.updateTask = this.updateTask.bind(this); 
     this.markComplete = this.markComplete.bind(this); 
+    this.setCurrentTaskEditable = this.setCurrentTaskEditable.bind(this); 
     this.state = {
-      tasks: {}
+      tasks: {},
+      editing: false,
+      currentTask: {}
     };
   }
 
-    addTask(task){
-      const tasks = {...this.state.tasks};
-      const taskKey = Object.keys(tasks).length + 1;
-      tasks[`task${taskKey}`] = task;
-      this.setState({ tasks })
-    }
+  addTask(task){
+    const tasks = {...this.state.tasks};
+    const taskKey = Object.keys(tasks).length + 1;
+    tasks[`task${taskKey}`] = task;
+    this.setState({ tasks })
+  }
 
-   removeTask(key){
+  removeTask(key){
      const tasks = {...this.state.tasks};
      delete tasks[key];
-    this.setState({ tasks }) 
+     this.setState({ tasks }) 
+  }
+
+  updateTask(key, updatedTask){
+     const tasks = {...this.state.tasks};
+     const task = tasks[key]
+     task.task = updatedTask
+     task.edit = false
+     tasks[key] = task
+     this.setState({ tasks }) 
   }
 
   markComplete(key){
      const tasks = {...this.state.tasks};
-     tasks[key].status = "Done"
+     let task = tasks[key]
+     task.status = (task.status === "Done" ? "InProgress" : "Done")
+     tasks[key] = task
      this.setState({ tasks }) 
   }
+
+  setCurrentTaskEditable(key){
+    const tasks = {...this.state.tasks};
+    const currentTask = tasks[key]
+    currentTask["edit"] = !currentTask["edit"];
+    tasks[key] = currentTask;
+    this.setState({ tasks });
+  }
+
   loadSamples(){
       this.setState({
         tasks: Tasks
@@ -55,11 +79,11 @@ class App extends Component {
       <div className="App">
          <Header/>
           <div className="content">
-            <TaskForm addTask={this.addTask} tasks={this.state.tasks}/>
+            <TaskForm addTask={this.addTask} tasks={this.state.tasks}/> 
             <ul className="allTasks">
               { Object.
                 keys(this.state.tasks).map(
-                  key => <Task key={key} index={key} task={this.state.tasks[key]} removefromTask={this.removeTask} markasDone={this.markComplete}  />)
+                  key => <Task key={key} index={key} task={this.state.tasks[key]} removefromTask={this.removeTask} markasDone={this.markComplete}  setCurrentTaskEditable={this.setCurrentTaskEditable} updateTask={this.updateTask}/>)
             }
             </ul>
           </div>
