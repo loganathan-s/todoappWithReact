@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 class EditTaskForm extends React.Component{
 	
 
@@ -15,10 +17,10 @@ class EditTaskForm extends React.Component{
 }
 
 EditTaskForm.PropTypes = {
-  task: React.PropTypes.object.isRequired,
-  index: React.PropTypes.string.isRequired,
-  setCurrentTaskEditable: React.PropTypes.func.isRequired,
-  updateTask: React.PropTypes.func.isRequired,
+  task: PropTypes.object.isRequired,
+  index: PropTypes.string.isRequired,
+  setCurrentTaskEditable: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
 };
 
 export default EditTaskForm;
