@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`class Task extends _react2.default.Component {
+	render() {
+		const { task, index } = this.props; // Es6 Destructuring
+		const markcompleteText = task.status === "Done" ? "Mark InProgress" : "Mark Complete";
+
+		return (
+
+			_react2.default.createElement('li', { className: 'task', __source: { fileName: _jsxFileName, lineNumber: 12 }, __self: this },
+				_react2.default.createElement('h3', { className: 'taskName', __source: { fileName: _jsxFileName, lineNumber: 13 }, __self: this },
+					task.task, ' - ', task.status),
+
+				task.edit ? _react2.default.createElement(_EditTaskForm2.default, { task: task, index: index, setCurrentTaskEditable: this.props.setCurrentTaskEditable, updateTask: this.props.updateTask, __source: { fileName: _jsxFileName, lineNumber: 16 }, __self: this }) : _react2.default.createElement('div', { __source: { fileName: _jsxFileName, lineNumber: 16 }, __self: this }, _react2.default.createElement('button', { onClick: () => this.props.markasDone(index), className: 'markcomplete', __source: { fileName: _jsxFileName, lineNumber: 16 }, __self: this }, markcompleteText), _react2.default.createElement('button', { onClick: () => this.props.setCurrentTaskEditable(index), className: 'editTask', __source: { fileName: _jsxFileName, lineNumber: 16 }, __self: this }, 'Edit Task'), _react2.default.createElement('button', { onClick: () => this.props.removefromTask(index), className: 'removeTask', __source: { fileName: _jsxFileName, lineNumber: 16 }, __self: this }, 'RemoveTask'))));
+
+
+	}} renders and matches the snapshot 1`] = `
+<li
+  className="task"
+>
+  <h3
+    className="taskName"
+  >
+    Everyones favorite white task. We will cut it to the size you need and ship it.
+     - 
+    in_progress
+  </h3>
+  <div>
+    <button
+      className="markcomplete"
+      onClick={[Function]}
+    >
+      Mark Complete
+    </button>
+    <button
+      className="editTask"
+      onClick={[Function]}
+    >
+      Edit Task
+    </button>
+    <button
+      className="removeTask"
+      onClick={[Function]}
+    >
+      RemoveTask
+    </button>
+  </div>
+</li>
+`;

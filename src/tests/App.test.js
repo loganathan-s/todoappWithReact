@@ -16,7 +16,7 @@ describe(App, () => {
 
   const component = shallow(<App />, options);
 
-  it('renders and matches our snapshot', () => {
+  it('renders and matches the snapshot', () => {
     const component = renderer.create(<App />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
