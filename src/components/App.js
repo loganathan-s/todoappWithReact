@@ -79,7 +79,7 @@ class App extends Component {
       <div className="App">
          <Header />
           <div className="content">
-            <TaskForm addTask={this.addTask} tasks={this.state.tasks}/> 
+            <TaskForm addTask={this.addTask} /> 
             <ul className="allTasks">
               { Object.
                 keys(this.state.tasks).map(

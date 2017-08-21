@@ -26,7 +26,7 @@ describe(Task, () => {
 	const appComponent = shallow(<App/>, options);
 	const currentTaskKey = Object.keys(appComponent.state('tasks'))[0];
 	let currentTask = appComponent.state('tasks')[Object.keys(appComponent.state('tasks'))[0]];
-	const component = mount(<Task key={currentTaskKey} index={currentTaskKey} task={currentTask } removefromTask={removeTask} markasDone={markComplete}  setCurrentTaskEditable={setCurrentTaskEditable} updateTask={updateTask}/>);
+	const component = shallow(<Task key={currentTaskKey} index={currentTaskKey} task={currentTask } removefromTask={removeTask} markasDone={markComplete}  setCurrentTaskEditable={setCurrentTaskEditable} updateTask={updateTask}/>);
 
 	it('renders and matches the snapshot', () => {
     	const component = renderer.create(<Task key={index} index={index} task={ task } removefromTask={removeTask} markasDone={markComplete}  setCurrentTaskEditable={setCurrentTaskEditable} updateTask={updateTask}/>);

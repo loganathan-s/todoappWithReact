@@ -71,7 +71,7 @@ exports[`class App extends _react.Component {
       _react2.default.createElement('div', { className: 'App', __source: { fileName: _jsxFileName, lineNumber: 79 }, __self: this },
         _react2.default.createElement(_Header2.default, { __source: { fileName: _jsxFileName, lineNumber: 80 }, __self: this }),
         _react2.default.createElement('div', { className: 'content', __source: { fileName: _jsxFileName, lineNumber: 81 }, __self: this },
-          _react2.default.createElement(_TaskForm2.default, { addTask: this.addTask, tasks: this.state.tasks, __source: { fileName: _jsxFileName, lineNumber: 82 }, __self: this }),
+          _react2.default.createElement(_TaskForm2.default, { addTask: this.addTask, __source: { fileName: _jsxFileName, lineNumber: 82 }, __self: this }),
           _react2.default.createElement('ul', { className: 'allTasks', __source: { fileName: _jsxFileName, lineNumber: 83 }, __self: this },
             Object.
             keys(this.state.tasks).map(
@@ -109,6 +109,7 @@ exports[`class App extends _react.Component {
         type="text"
       />
       <button
+        className="createTask"
         type="submit"
       >
         Add Task
