@@ -5,6 +5,8 @@ import TaskForm from './TaskForm';
 import Task from './Task';
 import logo from '../images/logo.svg';
 import {Tasks} from '../simpleTasks';
+import {BACKEND, formatArrayOfHash} from '../helpers';
+import Request from '../lib/ExternalRequest';
 
 import '../css/App.css';
 
@@ -26,23 +28,36 @@ class App extends Component {
 
   addTask(task){
     const tasks = {...this.state.tasks};
-    const taskKey = Object.keys(tasks).length + 1;
-    tasks[`task${taskKey}`] = task;
-    this.setState({ tasks })
+    Request.post(`${BACKEND}/tasks`, { task })
+    .then(response => {
+       tasks[`${response.id}`] = response;
+       this.setState({ tasks })
+     })
+     .catch(err => {
+       return err.message
+      });
   }
 
   removeTask(key){
      const tasks = {...this.state.tasks};
-     delete tasks[key];
-     this.setState({ tasks }) 
+     Request.delete(`${BACKEND}/tasks/${key}`)
+     .then(response => {
+       delete tasks[key];
+       this.setState({ tasks }) 
+     })
+     .catch(err => {
+       return err.message
+      });
   }
 
   updateTask(key, updatedTask){
      const tasks = {...this.state.tasks};
      const task = tasks[key]
      task.task = updatedTask
+     Request.put(`${BACKEND}/tasks/${task.id}`, { task })
+     .then(response => { tasks[key] = response })
+     .catch(err => {  return err.message });
      task.edit = false
-     tasks[key] = task
      this.setState({ tasks }) 
   }
 
@@ -50,7 +65,9 @@ class App extends Component {
      const tasks = {...this.state.tasks};
      let task = tasks[key]
      task.status = (task.status === "Done" ? "InProgress" : "Done")
-     tasks[key] = task
+     Request.put(`${BACKEND}/tasks/${task.id}`, { task })
+     .then(response => { tasks[key] = response })
+     .catch(err => {  return err.message });
      this.setState({ tasks }) 
   }
 
@@ -63,9 +80,14 @@ class App extends Component {
   }
 
   loadSamples(){
-      this.setState({
-        tasks: Tasks
-      })
+     let self = this;
+     const tasks = Request.get(`${BACKEND}/tasks`)
+     .then(response => {
+       self.setState({ tasks: formatArrayOfHash(response) })
+     })
+     .catch(err => {
+       return err.message
+      });
   }
 
   //Callback which runs before rendering the APP component
