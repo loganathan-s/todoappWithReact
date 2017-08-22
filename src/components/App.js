@@ -8,22 +8,17 @@ import {Tasks} from '../simpleTasks';
 import {BACKEND, formatArrayOfHash} from '../helpers';
 import Request from '../lib/ExternalRequest';
 
+
 import '../css/App.css';
 
 class App extends Component {
   constructor(){
     super();
-    this.loadSamples = this.loadSamples.bind(this); 
     this.addTask = this.addTask.bind(this); 
     this.removeTask = this.removeTask.bind(this); 
     this.updateTask = this.updateTask.bind(this); 
     this.markComplete = this.markComplete.bind(this); 
-    this.setCurrentTaskEditable = this.setCurrentTaskEditable.bind(this); 
-    this.state = {
-      tasks: {},
-      editing: false,
-      currentTask: {}
-    };
+    this.setCurrentTaskEditable = this.setCurrentTaskEditable.bind(this);
   }
 
   addTask(task){
@@ -78,25 +73,9 @@ class App extends Component {
     tasks[key] = currentTask;
     this.setState({ tasks });
   }
-
-  loadSamples(){
-     let self = this;
-     const tasks = Request.get(`${BACKEND}/tasks`)
-     .then(response => {
-       self.setState({ tasks: formatArrayOfHash(response) })
-     })
-     .catch(err => {
-       return err.message
-      });
-  }
-
-  //Callback which runs before rendering the APP component
-  componentWillMount(){ 
-    this.loadSamples();
-  }
-
-    
+  
   render() {
+
     return (
       <div className="App">
          <Header />
@@ -104,8 +83,8 @@ class App extends Component {
             <TaskForm addTask={this.addTask} /> 
             <ul className="allTasks">
               { Object.
-                keys(this.state.tasks).map(
-                  key => <Task key={key} index={key} task={this.state.tasks[key]} removefromTask={this.removeTask} markasDone={this.markComplete}  setCurrentTaskEditable={this.setCurrentTaskEditable} updateTask={this.updateTask}/>)
+                keys(this.props.tasks).map(
+                  key => <Task key={key} index={key} task={this.props.tasks[key]} removefromTask={this.removeTask} markasDone={this.markComplete}  setCurrentTaskEditable={this.setCurrentTaskEditable} updateTask={this.updateTask}/>)
             }
             </ul>
           </div>
