@@ -1,4 +1,5 @@
-import { createStore, compose } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { rootReducer } from '../reducers/index';
 import { Router, Route, browserHistory } from 'react-router'
@@ -6,12 +7,13 @@ import { Router, Route, browserHistory } from 'react-router'
 
 
 const defaultState = {
-	tasks: {},
-	editing: false,
-    currentTask: {}
+	tasks: {}
 }
 
 
-const store = createStore(rootReducer, defaultState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(rootReducer, defaultState, compose(
+      applyMiddleware(thunk),
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    ));
 
 export default store;

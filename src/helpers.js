@@ -2,8 +2,11 @@
   export const BACKEND = "https://todobackendapp.herokuapp.com"
   export function formatArrayOfHash(data){
   	let formatedData = data.reduce(function(map, obj){
-  		map[obj.id] = obj;
+  		obj["edit"] = false;
+  		map[`task${obj.id}`] = obj;
   		return map;
   	}, {})
   	return formatedData;
   }
+
+export const getNumberFromText = (text) => { return text.match(/\d+$/)[0]; }

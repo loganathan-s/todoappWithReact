@@ -22,60 +22,31 @@ class App extends Component {
   }
 
   addTask(task){
-    const tasks = {...this.state.tasks};
-    Request.post(`${BACKEND}/tasks`, { task })
-    .then(response => {
-       tasks[`${response.id}`] = response;
-       this.setState({ tasks })
-     })
-     .catch(err => {
-       return err.message
-      });
+    this.props.ayncTaskAdd(task);
   }
 
-  removeTask(key){
-     const tasks = {...this.state.tasks};
-     Request.delete(`${BACKEND}/tasks/${key}`)
-     .then(response => {
-       delete tasks[key];
-       this.setState({ tasks }) 
-     })
-     .catch(err => {
-       return err.message
-      });
+  removeTask(task){
+     this.props.ayncTaskDelete(task);
   }
 
   updateTask(key, updatedTask){
-     const tasks = {...this.state.tasks};
-     const task = tasks[key]
+     let task = this.props.tasks[key]
      task.task = updatedTask
-     Request.put(`${BACKEND}/tasks/${task.id}`, { task })
-     .then(response => { tasks[key] = response })
-     .catch(err => {  return err.message });
      task.edit = false
-     this.setState({ tasks }) 
+     this.props.ayncTaskUpdate(task);
   }
 
   markComplete(key){
-     const tasks = {...this.state.tasks};
-     let task = tasks[key]
+     let task = {...this.props.tasks[key]}
      task.status = (task.status === "Done" ? "InProgress" : "Done")
-     Request.put(`${BACKEND}/tasks/${task.id}`, { task })
-     .then(response => { tasks[key] = response })
-     .catch(err => {  return err.message });
-     this.setState({ tasks }) 
+     this.props.ayncTaskUpdate(task);
   }
 
   setCurrentTaskEditable(key){
-    const tasks = {...this.state.tasks};
-    const currentTask = tasks[key]
-    currentTask["edit"] = !currentTask["edit"];
-    tasks[key] = currentTask;
-    this.setState({ tasks });
+    this.props.setTaskEditable(key);
   }
   
   render() {
-
     return (
       <div className="App">
          <Header />
