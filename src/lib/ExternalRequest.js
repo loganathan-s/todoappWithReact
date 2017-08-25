@@ -20,14 +20,10 @@ class ExternalRequest{
   static get(url){
     return fetch(url)
    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      return response.json();
+       if (!response.ok) { throw Error(response.statusText); }
+       return response.json();
     })
-   .catch(err => {
-      console.log(err);
-    });
+   .catch(error => {throw Error(error)});
   }
   
   //
@@ -36,14 +32,12 @@ class ExternalRequest{
   static post(url, data){
     return fetch(url, {method: 'post', mode: 'cors', headers: this.HEADERS, body: JSON.stringify(data)})
            .then(response => {
-              if (!response.ok) {
-                 throw new Error(response.statusText);
-              }
+              if (!response.ok) { throw Error(response.statusText); }
+               //return Promise.reject(response.statusText);
               return response.json();
             })
-           .catch((err) => {
-                 console.log(err);
-            });
+           .catch(error => {throw Error(error)});
+  
   }
 
   //
@@ -52,17 +46,10 @@ class ExternalRequest{
   static put(url, data){
     return fetch(url, {method: 'put', headers: this.HEADERS, body: JSON.stringify(data)})
     .then(response => {
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
+      if (!response.ok) { throw Error(response.statusText); }
       return response.json();
     })
-    .catch(err => {
-      console.log(err);
-    });
-  
-
-    
+   .catch(error => {throw Error(error)});
   }
   
   //
@@ -71,14 +58,10 @@ class ExternalRequest{
   static delete(url){
    return fetch(url, {method: 'delete', headers: this.HEADERS})
    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
+      if (!response.ok) { throw Error(response.statusText); }
       return response.ok;
     })
-     .catch((err) => {
-         console.log(err);
-       });
+   .catch(error => {throw Error(error)});
   }
 
 }

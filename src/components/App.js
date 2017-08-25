@@ -7,6 +7,8 @@ import logo from '../images/logo.svg';
 import {Tasks} from '../simpleTasks';
 import {BACKEND, formatArrayOfHash} from '../helpers';
 import Request from '../lib/ExternalRequest';
+import RequestError from './RequestError';
+import Loading from './Loading';
 
 
 import '../css/App.css';
@@ -18,26 +20,34 @@ class App extends Component {
     this.markComplete = this.markComplete.bind(this); 
   }
 
+  componentDidMount() {
+     this.props.ayncTaskList()
+  }
+
   updateTask(key, updatedTask){
      let task = {...this.props.tasks[key]}
      console.log(task);
-     task.task = updatedTask
-     task.edit = false
+     task.task = updatedTask;
+     task.edit = false;
      this.props.ayncTaskUpdate(task);
   }
 
   markComplete(key){
      let task = {...this.props.tasks[key]}
-     console.log(task);
-     task.status = (task.status === "Done" ? "InProgress" : "Done")
+     task.status = (task.status === "Done" ? "InProgress" : "Done");
      this.props.ayncTaskUpdate(task);
   }
   
   render() {
+    const errorDetail = this.props.requests.isError ? <RequestError/>  : '';
+    const loading = this.props.requests.isLoading ? <Loading/> : '';
+
     return (
       <div className="App">
          <Header />
           <div className="content">
+             { loading }
+        { errorDetail }
             <TaskForm addTask={this.props.ayncTaskAdd} /> 
             <ul className="allTasks">
               { Object.

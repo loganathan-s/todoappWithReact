@@ -5,7 +5,8 @@ import App from "./App";
 
 function mapStateToProps(state){
  return {
-   tasks: state.tasks
+   tasks: state.tasks,
+   requests: state.requests
  }
 }
 

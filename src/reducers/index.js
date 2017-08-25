@@ -2,9 +2,11 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import tasks from './taskReducer';
+import requests from './requestReducer';
 
 export const rootReducer = combineReducers({ 
 	tasks: tasks,
-	editing: false,
-    currentTask: {}, routing: routerReducer })
+	requests: requests,
+    routing: routerReducer 
+})
 

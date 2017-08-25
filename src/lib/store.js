@@ -7,7 +7,8 @@ import { Router, Route, browserHistory } from 'react-router'
 
 
 const defaultState = {
-	tasks: {}
+	tasks: {},
+	requests: { isError: false, isLoading: false, errorMessage: false },
 }
 
 

@@ -9,7 +9,7 @@ import {BACKEND, formatArrayOfHash} from '../helpers';
  
 function tasks(state = [], action){
 	switch (action.type) {
-		case 'GET_TODO_DATA':
+		case 'FETCH_ALL_TASKS_SUCCESS':
 			return action.payload;
 		case 'ADD_TASK':	 
 			return {...state, [`task${action.task.id}`]: action.task }
@@ -20,7 +20,7 @@ function tasks(state = [], action){
     		currentTask["edit"] = !currentTask["edit"];
 			return {...state, [`task${currentTask.id}`]: currentTask }
 		case 'REMOVE_TASK':	 
-		    let allTasks = Object.keys(state).filter(key => key != `task${action.task['id']}`)
+			let allTasks = Object.keys(state).filter(key => key != `task${action.task['id']}`)
 			const validState = allTasks.reduce((newState, key) => {
 				newState[key] = {...state[key]}
 				return newState

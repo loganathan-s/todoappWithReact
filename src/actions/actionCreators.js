@@ -8,6 +8,24 @@ export function setTaskEditable(taskId){
 	return { type: "SET_EDIT_FLAG", taskId }
 }
 
+// Aync Calls
+//
+export function requestLoading() {
+  return { type: "REQUEST_LOADING", isLoading: true }
+}
+
+export function requestError(errorMessage = "RequestError") {
+  return { type: "REQUEST_ERROR", isError: true, errorMessage  }
+}
+
+export function requestSuccess() {
+  return { type: "REQUEST_SUCCESS", isError: false , isLoading: false }
+}
+
+export function fetchAllTasksSuccess(tasks) {
+  return { type: "FETCH_ALL_TASKS_SUCCESS", payload: tasks }
+}
+
 // Add Todo
 export function addTask(task){
 	return { type: "ADD_TASK", task }
@@ -27,19 +45,67 @@ export function updateTask(task){
 //
 export function ayncTaskAdd(task) {
   return dispatch => {
-  	  DataService.addTask(task).then(response => {return dispatch(addTask(response))});
+      dispatch(requestLoading());
+  	  DataService.addTask(task).then(response => {
+        dispatch(requestSuccess());
+        if(typeof response !='object'){
+          dispatch(requestError(response));
+          return
+        }
+        dispatch(addTask(response))
+      }).catch(err => {
+        alert(err)
+        dispatch(requestError(err));
+    });
   };
 }
 
 export function ayncTaskUpdate(task) {
   return dispatch => {
-  	  DataService.updateTask(task).then(response => {return dispatch(updateTask(response))});
+      dispatch(requestLoading());
+  	  DataService.updateTask(task).then(response => {
+        dispatch(requestSuccess());
+        if(typeof response !='object'){
+          dispatch(requestError(response));
+          return
+        }
+        dispatch(updateTask(response)) 
+      }).catch(err => {
+        dispatch(requestError());
+    });
   };
 }
 
 export function ayncTaskDelete(task) {
   return dispatch => {
-  	  let taskId = task.id
-  	  DataService.removeTask(taskId).then(response => {return dispatch(removeTask(task))});
+      dispatch(requestLoading());
+      let taskId = task.id
+  	  DataService.removeTask(taskId).then(response => {
+        dispatch(requestSuccess());
+        if(response != task.id){
+          dispatch(requestError(response));
+          return
+        }
+        dispatch(removeTask(task));
+      }).catch(err => {
+        dispatch(requestError(err));
+    });
+  };
+}
+
+export function ayncTaskList() {
+  return dispatch => {
+      dispatch(requestLoading());
+      DataService.getTasks().then(tasks => {
+        dispatch(requestSuccess());
+        if(typeof tasks !='object'){
+          dispatch(requestError(tasks));
+          return
+        }
+        dispatch(fetchAllTasksSuccess(tasks));
+    }).catch(err => {
+       dispatch(requestSuccess());
+       dispatch(requestError());
+    });
   };
 }

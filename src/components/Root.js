@@ -10,10 +10,7 @@ import  ReduxConnection from './ReduxConnector';
 import DataService from '../lib/DataService';
 
 class Root extends Component {
-  componentWillMount(){
-    DataService.getTasks().then(tasks => store.dispatch({type: 'GET_TODO_DATA', payload: tasks}))
-  }
-
+  
   render(){
      return (
       <Provider store={store} >
