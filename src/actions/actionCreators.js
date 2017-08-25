@@ -23,6 +23,8 @@ export function updateTask(task){
 	return { type: "UPDATE_TASK", task }
 }
 
+// Aync Calls
+//
 export function ayncTaskAdd(task) {
   return dispatch => {
   	  DataService.addTask(task).then(response => {return dispatch(addTask(response))});

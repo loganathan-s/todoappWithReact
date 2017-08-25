@@ -14,23 +14,13 @@ import '../css/App.css';
 class App extends Component {
   constructor(){
     super();
-    this.addTask = this.addTask.bind(this); 
-    this.removeTask = this.removeTask.bind(this); 
     this.updateTask = this.updateTask.bind(this); 
     this.markComplete = this.markComplete.bind(this); 
-    this.setCurrentTaskEditable = this.setCurrentTaskEditable.bind(this);
-  }
-
-  addTask(task){
-    this.props.ayncTaskAdd(task);
-  }
-
-  removeTask(task){
-     this.props.ayncTaskDelete(task);
   }
 
   updateTask(key, updatedTask){
-     let task = this.props.tasks[key]
+     let task = {...this.props.tasks[key]}
+     console.log(task);
      task.task = updatedTask
      task.edit = false
      this.props.ayncTaskUpdate(task);
@@ -38,12 +28,9 @@ class App extends Component {
 
   markComplete(key){
      let task = {...this.props.tasks[key]}
+     console.log(task);
      task.status = (task.status === "Done" ? "InProgress" : "Done")
      this.props.ayncTaskUpdate(task);
-  }
-
-  setCurrentTaskEditable(key){
-    this.props.setTaskEditable(key);
   }
   
   render() {
@@ -51,11 +38,11 @@ class App extends Component {
       <div className="App">
          <Header />
           <div className="content">
-            <TaskForm addTask={this.addTask} /> 
+            <TaskForm addTask={this.props.ayncTaskAdd} /> 
             <ul className="allTasks">
               { Object.
                 keys(this.props.tasks).map(
-                  key => <Task key={key} index={key} task={this.props.tasks[key]} removefromTask={this.removeTask} markasDone={this.markComplete}  setCurrentTaskEditable={this.setCurrentTaskEditable} updateTask={this.updateTask}/>)
+                  key => <Task key={key} index={key} task={this.props.tasks[key]} removefromTask={this.props.ayncTaskDelete} markasDone={this.markComplete}  setCurrentTaskEditable={this.props.setTaskEditable} updateTask={this.updateTask}/>)
             }
             </ul>
           </div>
