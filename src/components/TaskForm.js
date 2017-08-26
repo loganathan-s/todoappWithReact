@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { reduxForm, Field } from 'redux-form' // imported Field
 import validate from '../lib/Validation';
 
+//Stateless Component
 const renderInput = field =>   {
 	return (
 		<div>
