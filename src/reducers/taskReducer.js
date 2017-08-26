@@ -21,16 +21,10 @@ function tasks(state = [], action){
     		currentTask["edit"] = !currentTask["edit"];
 			return {...state, [`task${currentTask.id}`]: currentTask }
 		case 'REMOVE_TASK':
-			//const taskId = `task${action.task.id}`
-			//{ [taskId]: discard, ...newState } = state;
-			//return newState
-	 
-			let allTasks = Object.keys(state).filter(key => key != `task${action.task['id']}`)
-			const validState = allTasks.reduce((newState, key) => {
-				newState[key] = {...state[key]}
-				return newState
-			}, {})
-			return validState;
+			const taskId = `task${action.task.id}`;
+			//computed property name
+			const { [taskId]: discard, ...newState } = state;
+			return newState;
 		default:
 			 return state
 	}
