@@ -3,6 +3,7 @@
 // Actions are like event listeners, it calls every time.
 import {BACKEND, formatArrayOfHash} from '../helpers';
 import DataService from '../lib/DataService';
+import { reset } from 'redux-form';
 
 export function setTaskEditable(taskId){
 	return { type: "SET_EDIT_FLAG", taskId }
@@ -52,6 +53,7 @@ export function ayncTaskAdd(task) {
           dispatch(requestError(response));
           return
         }
+        dispatch(reset('taskForm'));
         dispatch(addTask(response))
       }).catch(err => {
         alert(err)

@@ -1,31 +1,35 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import { reduxForm, Field } from 'redux-form' // imported Field
+import validate from '../lib/Validation';
 
-class TaskForm extends React.Component{
-	
-
-	createTask(event){
-		event.preventDefault();
-		const task = {task: this.task.value, status: "New"}
-		this.props.addTask(task);
-		this.taskForm.reset();
-	}	
-
-	render(){
-		return(
-			 <form ref={(input) => this.taskForm = input} className="taskForm"  onSubmit={this.createTask.bind(this)}>
-			  <input ref={(input) => this.task = input } type="text" placeholder="Task" />
-			  <button type="submit" className="createTask">Add Task</button> 
-			 </form>
-			)
-	}
-
+const renderInput = field =>   {
+	return (
+		<div>
+		    <input {...field.input} type={field.type}/> 
+		    {field.meta.touched && field.meta.error && <span className="error">{field.meta.error}</span> }
+  		</div>
+  	);
 }
 
+class TaskForm extends Component {
+	render() {
+	  const { handleSubmit, pristine, submitting } = this.props
+	  return (
+	    <form onSubmit={ handleSubmit }>
+	      <div>
+	        <Field name="task" component={renderInput} type="text" placeholder="Enter New Task" />
+	        <button type="submit">Submit</button>
+	      </div>
+	    </form>
+	  )
+	}
+}
 
-TaskForm.PropTypes = {
-  addTask: PropTypes.func.isRequired,
-};
+TaskForm = reduxForm({
+  form: 'taskForm',
+  validate
+
+})(TaskForm)
 
 export default TaskForm;
-

@@ -4,8 +4,6 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { rootReducer } from '../reducers/index';
 import { Router, Route, browserHistory } from 'react-router'
 
-
-
 const defaultState = {
 	tasks: {},
 	requests: { isError: false, isLoading: false, errorMessage: false },

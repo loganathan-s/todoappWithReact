@@ -14,12 +14,17 @@ function tasks(state = [], action){
 		case 'ADD_TASK':	 
 			return {...state, [`task${action.task.id}`]: action.task }
 		case 'UPDATE_TASK':
+		   console.log(state);
 		    return {...state, [`task${action.task.id}`]: action.task }
 		case 'SET_EDIT_FLAG':
 			const currentTask = {...state[action.taskId]}
     		currentTask["edit"] = !currentTask["edit"];
 			return {...state, [`task${currentTask.id}`]: currentTask }
-		case 'REMOVE_TASK':	 
+		case 'REMOVE_TASK':
+			//const taskId = `task${action.task.id}`
+			//{ [taskId]: discard, ...newState } = state;
+			//return newState
+	 
 			let allTasks = Object.keys(state).filter(key => key != `task${action.task['id']}`)
 			const validState = allTasks.reduce((newState, key) => {
 				newState[key] = {...state[key]}

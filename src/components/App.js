@@ -18,6 +18,12 @@ class App extends Component {
     super();
     this.updateTask = this.updateTask.bind(this); 
     this.markComplete = this.markComplete.bind(this); 
+    this.createTask = this.createTask.bind(this); 
+  }
+ 
+  createTask(values){
+    const task = {task: values.task, status: "New"}
+    this.props.ayncTaskAdd(task);
   }
 
   componentDidMount() {
@@ -39,16 +45,16 @@ class App extends Component {
   }
   
   render() {
-    const errorDetail = this.props.requests.isError ? <RequestError/>  : '';
+    const errorDetail = this.props.requests.isError ? <RequestError errorMessage={ this.props.errorMessage}/>  : '';
     const loading = this.props.requests.isLoading ? <Loading/> : '';
-
+    console.log(this.props.requests)
     return (
       <div className="App">
          <Header />
           <div className="content">
              { loading }
         { errorDetail }
-            <TaskForm addTask={this.props.ayncTaskAdd} /> 
+            <TaskForm  onSubmit={this.createTask} fields={this.props.fields}/> 
             <ul className="allTasks">
               { Object.
                 keys(this.props.tasks).map(

@@ -7,13 +7,13 @@
 function requests(state = { }, action){
 	switch (action.type) {
 		case 'REQUEST_LOADING':
-			return {...state, isLoading: true}
+		    return { ...state, isLoading: true}
 		case 'REQUEST_ERROR':	 
-			return {...state, isError: true, errorMessage: action.errorMessage }
+			return { ...state, isError: true, errorMessage: action.errorMessage }
 		case 'REQUEST_SUCCESS':
-		    return {isError: false, isLoading: false }
+		    return { isError: false, isLoading: false }
 		default:
-			return {isError: false, isLoading: false }
+			return state
 	}
 }
 
